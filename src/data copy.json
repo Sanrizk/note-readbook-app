@@ -1,0 +1,44 @@
+[
+    {
+        "Judul": "Book1",
+        "Author": "Fulan, M.Kom",
+        "PageRomawi": 5,
+        "Page": 150,
+        "Status": {
+            "IsRead": true,
+            "IsRomawiPage": true,
+            "IsPage": false
+        },
+        "Reading": {
+            "Page": 5
+        }
+    },
+    {
+        "Judul": "Book2",
+        "Author": "Fulana, M.Kom",
+        "PageRomawi": 10,
+        "Page": 130,
+        "Status": {
+            "IsRead": true,
+            "IsRomawiPage": false,
+            "IsPage": true
+        },
+        "Reading": {
+            "Page": 35
+        }
+    },
+    {
+        "Judul": "Book3",
+        "Author": "Fulani, M.Kom",
+        "PageRomawi": 7,
+        "Page": 180,
+        "Status": {
+            "IsRead": true,
+            "IsRomawiPage": false,
+            "IsPage": true
+        },
+        "Reading": {
+            "Page": 40
+        }
+    }
+]
