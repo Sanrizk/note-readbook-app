@@ -16,6 +16,9 @@ export default function Content() {
   const [message, setMessage] = useState("")
   const [edit, setEdit] = useState(false)
 
+  // useEffect(() => {
+  //   console.log(book)
+  // }, [book])
 
   useEffect(() => {
     const fetching = async () => {
@@ -33,13 +36,9 @@ export default function Content() {
     }
 
     fetching()
-  }, [books])
+  }, [])
 
-  // useEffect(() => {
-  //   console.log(book)
-  // }, [book])
-
-  const toggleModal = () => document.getElementById('my_modal_2').showModal()
+  const toggleModal = () => document.getElementById('my_modal').showModal()
 
   const onSubmitAdd = async (e) => {
     e.preventDefault()
@@ -84,15 +83,18 @@ export default function Content() {
   const onClickEdit = (book) => {
     setBook(book)
     setEdit(!edit)
-    document.getElementById('my_modal_2').showModal()
   }
 
   const onClickCloseEdit = () => {
-    setEdit((!edit))
+    setEdit(!edit)
     setMessage('')
+    setBook(emptyBook)
   }
 
-  const onClickCloseModal = () => setMessage('')
+  const onClickCloseModal = () => {
+    setMessage('')
+    setBook(emptyBook)
+  }
 
   const onSubmitEdit = async (e, slug) => {
     e.preventDefault()
@@ -112,7 +114,6 @@ export default function Content() {
 
   }
 
-
   return (
     <>
       {books.map((book, index) => (
@@ -130,17 +131,17 @@ export default function Content() {
           <Modal
             change={onChangeBook}
             submit={e => onSubmitEdit(e, book.Slug)}
-            closeEdit={onClickCloseEdit}
+            // closeEdit={onClickCloseEdit}
             dataBook={book}
             message={(message === '') ? '' : message}
             isEdit={edit}
-            closeModal={onClickCloseModal}
+            closeModal={onClickCloseEdit}
           ></Modal>
         ) : (
           <Modal
             change={onChangeBook}
             submit={onSubmitAdd}
-            dataBook={emptyBook}
+            dataBook={book}
             message={(message === '') ? '' : message}
             isEdit={false}
             closeModal={onClickCloseModal}

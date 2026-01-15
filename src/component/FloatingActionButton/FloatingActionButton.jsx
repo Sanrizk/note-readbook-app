@@ -24,7 +24,7 @@ export default function FloatingActionButton(props) {
         <button className="fab-main-action btn btn-circle btn-lg">M</button>
 
         {/* buttons that show up when FAB is open */}
-        <button className="btn btn-lg btn-circle" onClick={props.modal}>+</button>
+        <label htmlFor="my_modal" className="btn btn-lg btn-circle">+</label>
         <button className="btn btn-lg btn-circle" onClick={toggleTheme}>DM</button>
       </div>
     </>

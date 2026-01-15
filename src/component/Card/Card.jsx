@@ -15,7 +15,7 @@ export default function Card(props) {
           <p>Penulis: {props.author}</p>
           <p>Halaman: {props.page}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary" onClick={props.onClickEdit}>Ubah</button>
+            <label htmlFor="my_modal" className="btn btn-primary" onClick={props.onClickEdit}>Ubah</label>
             <button className="btn btn-error" onClick={props.onClickDelete}>Hapus</button>
           </div>
         </div>

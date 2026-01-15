@@ -1,29 +1,42 @@
 import React, { useEffect, useRef } from "react";
 
 export default function Modal(props) {
+  const titleRef = useRef()
   const authorRef = useRef()
   const pageRomRef = useRef()
   const pageRef = useRef()
 
-  useEffect(() => {
-    console.log(props.isEdit)
-    if (props.isEdit) {
-      authorRef.current.setAttribute('value', props.dataBook.Author)
-      pageRomRef.current.setAttribute('value', props.dataBook.PageRomawi)
-      pageRef.current.setAttribute('value', props.dataBook.Page)
-    } else {
-      authorRef.current.removeAttribute('value')
-      pageRomRef.current.removeAttribute('value')
-      pageRef.current.removeAttribute('value')
-    }
-  }, [props.isEdit])
+  // useEffect(() => {
+  //   // console.log(props.isEdit)
+  //   // if (props.isEdit) {
+  //   //   authorRef.current.setAttribute('value', props.dataBook.Author)
+  //   //   pageRomRef.current.setAttribute('value', props.dataBook.PageRomawi)
+  //   //   pageRef.current.setAttribute('value', props.dataBook.Page)
+  //   // } else {
+  //   //   titleRef.current.setAttribute('value', '')
+  //   //   authorRef.current.setAttribute('value', '')
+  //   //   pageRomRef.current.setAttribute('value', '')
+  //   //   pageRef.current.setAttribute('value', '')
+  //   // }
+  //   authorRef.current.setAttribute('value', props.dataBook.Author)
+  //   pageRomRef.current.setAttribute('value', props.dataBook.PageRomawi)
+  //   pageRef.current.setAttribute('value', props.dataBook.Page)
+  // }, [props.isEdit])
 
   return (
     <>
-      <dialog id="my_modal_2" className="modal">
+      <input type="checkbox" id="my_modal" className="modal-toggle" />
+      <div className="modal" role="dialog">
         <div className="modal-box absolute top-20">
           <h3 className="font-bold text-lg py-2">Tambah Buku</h3>
-
+          <form method="dialog">
+            {/* {(props.isEdit) ? (
+              <label htmlFor="my_modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={props.closeEdit}>✕</label>
+            ) : (
+              <label htmlFor="my_modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={props.closeModal}>✕</label>
+            )} */}
+            <label htmlFor="my_modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={props.closeModal}>✕</label>
+          </form>
           {
             (props.message !== '') ?
               <div role="alert" className="alert alert-success">
@@ -41,32 +54,24 @@ export default function Modal(props) {
               {(props.isEdit) ? (
                 <p className="flex justify-between m-2"><span>Judul:</span> <span>{props.dataBook.Title}</span></p>
               ) : (
-                <input className="input" type="text" onChange={props.change} name="Title" placeholder="Judul Buku" />
+                <input className="input" type="text" onChange={props.change} name="Title" placeholder="Judul Buku" ref={titleRef} value={props.dataBook.Title} />
               )}
             </div>
             <div className="my-1">
-              <input className="input" type="text" onChange={props.change} name="Author" placeholder="Nama Penulis" ref={authorRef} />
+              <input className="input" type="text" onChange={props.change} name="Author" placeholder="Nama Penulis" ref={authorRef} value={props.dataBook.Author}/>
             </div>
             <div className="my-1">
-              <input className="input" type="text" onChange={props.change} name="PageRomawi" placeholder="Halaman Romawi" ref={pageRomRef} />
+              <input className="input" type="text" onChange={props.change} name="PageRomawi" placeholder="Halaman Romawi" ref={pageRomRef} value={props.dataBook.PageRomawi}/>
             </div>
             <div className="my-1">
-              <input className="input" type="text" onChange={props.change} name="Page" placeholder="Halaman Isi" ref={pageRef} />
+              <input className="input" type="text" onChange={props.change} name="Page" placeholder="Halaman Isi" ref={pageRef} value={props.dataBook.Page}/>
             </div>
             <div className="my-1 flex flex-row-reverse">
               <button type="submit" className="btn btn-primary">Simpan</button>
             </div>
           </form>
-          <p className="py-2">Tekan ESC di keyboard atau Klik luar untuk menutup</p>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          {(props.isEdit) ? (
-            <button onClick={props.closeEdit}>close</button>
-          ) : (
-            <button onClick={props.closeModal}>close</button>
-          )}
-        </form>
-      </dialog>
+      </div>
     </>
   )
 }
