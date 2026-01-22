@@ -1,10 +1,5 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import data from './data.json'
 import Navbar from './layout/navbar/Navbar'
-import Card from './component/Card/Card'
 import Content from './layout/body/Content'
 
 export default function App() {
@@ -33,6 +28,7 @@ export default function App() {
     <>
       {/* <h1 className="text-3xl font-bold underline">Test</h1> */}
       <Content></Content>
+      <div className="h-20"></div>
       <Navbar></Navbar>
     </>
   )

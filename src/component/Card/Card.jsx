@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img from './../../assets/defaultbook.jpg'
+import CardFigure from "./CardFigure/CardFigure";
+import CardBody from "./CardBody/CardBody";
+import { useLocation } from "react-router";
+
 
 export default function Card(props) {
+  let className = ''
+  if (useLocation().pathname === '/readings') {
+    className = 'card-side'
+  } else if (useLocation().pathname === '/books') {
+    className = 'lg:card-side'
+  } else {
+    className = ''
+  }
+
   return (
     <>
-      <div className="card card-side bg-base-100 shadow-sm m-3">
-        <figure className="w-32">
-          <img
-            src={img}
-            alt="Album" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{props.title}</h2>
-          <p>Penulis: {props.author}</p>
-          <p>Halaman: {props.page}</p>
-          <div className="card-actions justify-end">
-            <label htmlFor="my_modal" className="btn btn-primary" onClick={props.onClickEdit}>Ubah</label>
-            <button className="btn btn-error" onClick={props.onClickDelete}>Hapus</button>
-          </div>
-        </div>
+      <div className={`card bg-base-100 shadow-sm m-3 ${className}`}>
+        <CardFigure img={img} />
+        <CardBody
+          title={props.title}
+          author={props.author}
+          page={props.page}
+          onClickDelete={props.onClickDelete}
+          onClickEdit={props.onClickEdit}
+        />
       </div>
     </>
   )

@@ -11,7 +11,7 @@ export default function Dock(props) {
         </button> */}
         {
           props.nav.map((item, index) => (
-            <ButtonNav faIcon={props.faIcon[index]} nav={item} key={index}></ButtonNav>
+            <ButtonNav faIcon={props.faIcon[index]} nav={item} key={index} isActive={(item === props.routes)}></ButtonNav>
           ))
         }
       </div>
