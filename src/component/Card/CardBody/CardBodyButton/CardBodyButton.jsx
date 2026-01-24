@@ -1,4 +1,5 @@
 import { useLocation } from "react-router"
+import { useRef, useEffect, useState } from "react"
 
 export default function CardBodyButton(props) {
   return (
@@ -13,10 +14,20 @@ export default function CardBodyButton(props) {
       {(useLocation().pathname === '/readings') && (
         <>
           <label className="label">
-            <input type="checkbox" className="checkbox" />
+            {(props.isRead) ?
+              (<input type="checkbox" className="checkbox" defaultChecked disabled />)
+              :
+              (<input type="checkbox" onChange={(e) => props.changeChecked(e, props.slug, props.index)} className="checkbox" />)
+            }
             Dibaca
           </label>
-          <label htmlFor="my_modal" className="btn btn-sm btn-primary lg:w-64 rounded-full" onClick={props.onClickEdit}>Update Bacaan</label>
+
+          {(props.isRead) ?
+            <label htmlFor="my_modal" className="btn btn-sm btn-primary lg:w-64 rounded-full" onClick={props.onClickEdit}>Update Bacaan</label>
+            :
+            (<></>)
+          }
+
         </>
       )}
 

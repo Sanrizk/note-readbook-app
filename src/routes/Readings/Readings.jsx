@@ -6,27 +6,43 @@ import Navbar from '../../layout/navbar/Navbar'
 import { useLocation } from 'react-router'
 
 export default function Readings() {
+  const [isChecked, setIsChecked] = useState(false)
+  const [radio, setRadio] = useState('Romawi Page')
   const [routes, setRoutes] = useState('')
   const [books, setBooks] = useState([]);
+  const [tokenBooks, setTokenBooks] = useState('jzism2')
   const emptyBook = {
     Title: '',
     Author: '',
     PageRomawi: '',
     Page: '',
-    Slug: ''
+    Slug: '',
+    ReadingNumber: ''
   }
   const [book, setBook] = useState(emptyBook)
   const [message, setMessage] = useState("")
   const [edit, setEdit] = useState(false)
 
-  const location = useLocation()  
+  const location = useLocation()
 
-  useEffect(() => { 
+  function secureRandomTextAndNumber(length) {
+    if (typeof length !== "number" || length <= 0) {
+      throw new Error("Length must be a positive integer.");
+    }
+
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array);
+
+    return Array.from(array, num => chars[num % chars.length]).join("");
+  }
+
+  useEffect(() => {
     let route = location.pathname
-    let routeSlice = route.slice(0,0) + route.slice(0+1)
+    let routeSlice = route.slice(0, 0) + route.slice(0 + 1)
     let capitalized = routeSlice.charAt(0).toUpperCase() + routeSlice.slice(1)
-    setRoutes(capitalized) 
-  } , [])
+    setRoutes(capitalized)
+  }, [])
 
   useEffect(() => {
     const fetching = async () => {
@@ -45,8 +61,10 @@ export default function Readings() {
       }
     }
 
+    // console.log(tokenBooks)
+
     fetching()
-  }, [books])
+  }, [tokenBooks])
 
   const toggleModal = () => document.getElementById('my_modal').showModal()
 
@@ -117,20 +135,46 @@ export default function Readings() {
     }
 
     try {
-      const indexBook = books.findIndex(book => book.Slug === slug)
       const newBook = await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
-      console.log(newBook)
-      let oldBooks = books
-      oldBooks.splice(indexBook, 1)
-      oldBooks[indexBook] = book
-      setBooks(oldBooks)
+      setTokenBooks(secureRandomTextAndNumber(12))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const onChangeChecked = async (e, slug, index) => {
+    // setIsChecked(e.target)
+    // console.log(e.target.parentElement.parentElement)
+    const bookCheck = books.find(book => book.Slug === slug)
+    // console.log(bookCheck)
+    bookCheck.Status.IsRead = true
+    // setIsChecked(index === indexCheck)
+
+    const url = 'https://read-app-steel.vercel.app/api/books/edit'
+    const header = {
+      'Content-Type': 'application/json',
+      'x-api-key': 'df507b0fc3fa5fefab0430838d8d09d1f4f36915bf531528679231d91628e1d98874aad668f5520b90a8afb60b2cf83b5ae0fe338dd030206323bd2c8d1e9aba'
+    }
+
+    try {
+      // const indexBook = books.findIndex(book => book.Slug === slug)
+      await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(bookCheck) }).then(res => res.json())
+      setTokenBooks(secureRandomTextAndNumber(12))
       // setBooks([...books, newBook]) // logika ini perlu diuji di javascript
     } catch (err) {
       console.error(err)
     }
-
   }
+
+  const onChangeRadio = (e) => {
+    setRadio(e.target.value)
+  }
+
+
+  // useEffect(() => {
+  //   console.log(isChecked)
+  // }, [isChecked])
 
   return (
     <>
@@ -139,14 +183,18 @@ export default function Readings() {
         edit={edit}
         onChangeBook={onChangeBook}
         book={book}
-        toggleModal={toggleModal}
-        onClickDelete={onClickDelete}
+        // toggleModal={toggleModal}
+        // onClickDelete={onClickDelete}
         onClickEdit={onClickEdit}
-        onSubmitAdd={onSubmitAdd}
+        // onSubmitAdd={onSubmitAdd}
         onSubmitEdit={onSubmitEdit}
         onClickCloseModal={onClickCloseModal}
         onClickCloseEdit={onClickCloseEdit}
         message={(message === '') ? '' : message}
+        checked={isChecked}
+        changeChecked={onChangeChecked}
+        changeRadio={onChangeRadio}
+        radio={radio}
       />
       <div className="h-20"></div>
       <Navbar routes={routes}></Navbar>

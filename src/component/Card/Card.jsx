@@ -23,8 +23,16 @@ export default function Card(props) {
           title={props.title}
           author={props.author}
           page={props.page}
+          slug={props.slug}
+          isRead={props.isRead}
+          pageRomawi={props.pageRomawi}
+          readingNumber={props.readingNumber}
+          status={props.status}
           onClickDelete={props.onClickDelete}
           onClickEdit={props.onClickEdit}
+          checked={props.checked}
+          changeChecked={props.changeChecked}
+          index={props.index}
         />
       </div>
     </>

@@ -13,6 +13,9 @@ export default function ModalBox(props) {
         isEdit={props.isEdit} 
         dataBook={props.dataBook} 
         change={props.change}
+
+        changeRadio={props.changeRadio}
+        radio={props.radio}
       />
     </div>
   )

@@ -16,6 +16,21 @@ export default function CardBody(props) {
     className = ''
   }
 
+  // reading number masih aneh logikanya
+  const persentaseRead = parseInt((Number(props.pageRomawi) + Number(props.readingNumber)) / (Number(props.pageRomawi) + Number(props.page)) * 100)
+  let classPersentase = ''
+  if (persentaseRead > 70 && persentaseRead <= 99) {
+    classPersentase = 'progress-info'
+  } else if (persentaseRead > 30 && persentaseRead <= 70) {
+    classPersentase = 'progress-warning'
+  } else if (persentaseRead <= 30) {
+    classPersentase = 'progress-error'
+  } else if (persentaseRead == 100) {
+    classPersentase = 'progress-success'
+  } else {
+    classPersentase = ''
+  }
+
   return (
     // <div className="card-body">
     <div className={className}>
@@ -30,12 +45,21 @@ export default function CardBody(props) {
 
       {(useLocation().pathname === '/readings') && (
         <>
-          <p>50 / 250 Halaman (70%)</p>
-          <progress className="lg:w-1/2 progress" value="70" max="100"></progress>
+          <p>{props.readingNumber} / {props.page} Halaman ({persentaseRead}%)</p>
+          {/* error <30%, warning <70%, info <99%, success 100% */}
+          <progress className={'lg:w-1/2 progress ' + classPersentase} value={persentaseRead} max="100"></progress>
         </>
       )}
 
-      <CardBodyButton onClickEdit={props.onClickEdit} onClickDelete={props.onClickDelete} />
+      <CardBodyButton
+        onClickEdit={props.onClickEdit}
+        onClickDelete={props.onClickDelete}
+        isRead={props.isRead}
+        checked={props.checked}
+        changeChecked={props.changeChecked}
+        slug={props.slug}
+        index={props.index}
+      />
     </div>
   )
 }

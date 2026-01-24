@@ -13,6 +13,10 @@ export default function Modal(props) {
           isEdit={props.isEdit}
           dataBook={props.dataBook}
           change={props.change}
+
+          changeRadio={props.changeRadio}
+          onSubmitEdit={props.onSubmitEdit}
+          radio={props.radio}
         />
      </div>
     </>

@@ -7,6 +7,7 @@ import { useLocation } from 'react-router';
 export default function Books() {
   const [routes, setRoutes] = useState('');
   const [books, setBooks] = useState([]);
+  const [tokenBooks, setTokenBooks] = useState('asd237hs8')
   const emptyBook = {
     Title: '',
     Author: '',
@@ -17,6 +18,18 @@ export default function Books() {
   const [book, setBook] = useState(emptyBook)
   const [message, setMessage] = useState("")
   const [edit, setEdit] = useState(false)
+
+  function secureRandomTextAndNumber(length) {
+    if (typeof length !== "number" || length <= 0) {
+      throw new Error("Length must be a positive integer.");
+    }
+
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array);
+
+    return Array.from(array, num => chars[num % chars.length]).join("");
+  }
 
   useEffect(() => {
     let route = location.pathname
@@ -41,9 +54,10 @@ export default function Books() {
         console.error(err)
       }
     }
-
+    
     fetching()
-  }, [books])
+    console.log(books)
+  }, [tokenBooks])
 
   const toggleModal = () => document.getElementById('my_modal').showModal()
 
@@ -58,8 +72,9 @@ export default function Books() {
     try {
       const newBook = await fetch(url, { method: 'POST', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
-      setBooks([...books, newBook.data])
-      console.log(newBook)
+      // setBooks([...books, newBook.data])
+      // console.log(newBook)
+      setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)
     }
@@ -83,7 +98,7 @@ export default function Books() {
     try {
       const response = await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
       console.log(response)
-      setBooks([...books])
+      setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)
     }
@@ -117,12 +132,12 @@ export default function Books() {
       const indexBook = books.findIndex(book => book.Slug === slug)
       const newBook = await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
-      console.log(newBook)
-      let oldBooks = books
-      oldBooks.splice(indexBook, 1)
-      oldBooks[indexBook] = book
-      setBooks(oldBooks)
-      // setBooks([...books, newBook]) // logika ini perlu diuji di javascript
+      // console.log(newBook)
+      // let oldBooks = books
+      // oldBooks.splice(indexBook, 1)
+      // oldBooks[indexBook] = book
+      // setBooks(oldBooks)
+      setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)
     }
