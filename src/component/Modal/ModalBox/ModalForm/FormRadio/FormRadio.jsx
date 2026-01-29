@@ -1,10 +1,6 @@
 import { useEffect } from "react"
 
-export default function FormInput(props) {
-  useEffect(() => {
-    console.log(props.checked)
-  }, [props.checked])
-  
+export default function FormInput(props) {  
   return (
     <div className="my-1 mx-3">
       <label>

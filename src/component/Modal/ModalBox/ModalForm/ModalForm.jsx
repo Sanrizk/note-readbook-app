@@ -33,8 +33,8 @@ export default function ModalForm(props) {
   ]
 
   // useEffect(() => {
-  //   console.log(props.dataBook)
-  // }, [props.dataBook])
+  //   console.log(props.radio)
+  // }, [props.radio])
 
 
   return (
@@ -82,7 +82,7 @@ export default function ModalForm(props) {
           placeholder='Halaman'
           value={props.dataBook.ReadingNumber}
         />
-        <p>/ {props.dataBook.PageRomawi} Halaman</p>
+        <p>/ {(props.radio === 'Page') ? props.dataBook.Page : props.dataBook.PageRomawi} Halaman</p>
       </div>
 
       <FormSubmit />

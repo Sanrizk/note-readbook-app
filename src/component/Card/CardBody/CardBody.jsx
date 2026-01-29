@@ -17,7 +17,7 @@ export default function CardBody(props) {
   }
 
   // reading number masih aneh logikanya
-  const persentaseRead = parseInt((Number(props.pageRomawi) + Number(props.readingNumber)) / (Number(props.pageRomawi) + Number(props.page)) * 100)
+  const persentaseRead = parseInt((Number((props.status.IsPage) ? props.pageRomawi : 0) + Number(props.readingNumber)) / (Number(props.pageRomawi) + Number(props.page)) * 100)
   let classPersentase = ''
   if (persentaseRead > 70 && persentaseRead <= 99) {
     classPersentase = 'progress-info'
