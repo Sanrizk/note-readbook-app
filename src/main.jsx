@@ -4,6 +4,7 @@ import './index.css'
 import Books from './routes/Books/Books.jsx'
 import Readings from './routes/Readings/Readings.jsx'
 import Home from './routes/Home/Home.jsx'
+import Done from './routes/Done/Done.jsx'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/done",
-    element: <h1>Hello Done</h1>
+    Component: Done
   },
   {
     path: "/recommend",

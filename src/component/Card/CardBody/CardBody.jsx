@@ -8,7 +8,7 @@ export default function CardBody(props) {
   // halaman
   // button
   let className = ''
-  if (useLocation().pathname === '/readings') {
+  if (useLocation().pathname === '/readings' || useLocation().pathname === '/done') {
     className = 'card-body w-1/2'
   } else if (useLocation().pathname === '/books') {
     className = 'card-body'
@@ -43,7 +43,7 @@ export default function CardBody(props) {
         </>
       )}
 
-      {(useLocation().pathname === '/readings') && (
+      {(useLocation().pathname === '/readings' || useLocation().pathname === '/done') && (
         <>
           <p>{props.readingNumber} / {props.page} Halaman ({persentaseRead}%)</p>
           {/* error <30%, warning <70%, info <99%, success 100% */}

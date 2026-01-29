@@ -24,6 +24,8 @@ export default function Content({ books, edit, onChangeBook, onSubmitAdd, onSubm
   // *content reccomend
   // page soon
 
+  console.log(books)
+
   return (
     <>
 

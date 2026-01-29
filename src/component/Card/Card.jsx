@@ -7,7 +7,7 @@ import { useLocation } from "react-router";
 
 export default function Card(props) {
   let className = ''
-  if (useLocation().pathname === '/readings') {
+  if (useLocation().pathname === '/readings' || useLocation().pathname === '/done') {
     className = 'card-side'
   } else if (useLocation().pathname === '/books') {
     className = 'lg:card-side'
