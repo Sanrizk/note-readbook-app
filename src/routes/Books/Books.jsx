@@ -47,16 +47,13 @@ export default function Books() {
       }
       try {
         const resBooks = await fetch(url, { method: 'GET', headers: header }).then(res => res.json())
-        if (resBooks.data.length !== books.length) {
-          setBooks(resBooks.data)
-        }
+        setBooks(resBooks.data)
       } catch (err) {
         console.error(err)
       }
     }
     
     fetching()
-    console.log(books)
   }, [tokenBooks])
 
   const toggleModal = () => document.getElementById('my_modal').showModal()
@@ -96,8 +93,8 @@ export default function Books() {
     }
 
     try {
-      const response = await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
-      console.log(response)
+      await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
+      // console.log(response)
       setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)

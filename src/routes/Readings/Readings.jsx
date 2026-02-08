@@ -53,15 +53,15 @@ export default function Readings() {
       }
       try {
         const resBooks = await fetch(url, { method: 'GET', headers: header }).then(res => res.json())
-        if (resBooks.data.length !== books.length) {
-          setBooks(resBooks.data)
-        }
+        // if (resBooks.data.length !== books.length) {
+        // }
+        setBooks(resBooks.data)
       } catch (err) {
         console.error(err)
       }
     }
 
-    // console.log(tokenBooks)
+    console.log(tokenBooks)
 
     fetching()
   }, [tokenBooks])
@@ -161,7 +161,6 @@ export default function Readings() {
       // const indexBook = books.findIndex(book => book.Slug === slug)
       await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(bookCheck) }).then(res => res.json())
       setTokenBooks(secureRandomTextAndNumber(12))
-      // setBooks([...books, newBook]) // logika ini perlu diuji di javascript
     } catch (err) {
       console.error(err)
     }

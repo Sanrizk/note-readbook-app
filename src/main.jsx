@@ -7,6 +7,7 @@ import Home from './routes/Home/Home.jsx'
 import Done from './routes/Done/Done.jsx'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
+import Backup from './routes/Backup/Backup.jsx'
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
     Component: Done
   },
   {
-    path: "/recommend",
-    element: <h1>hello Recommend</h1>
+    path: "/backup",
+    Component: Backup
   }
 ])
 
