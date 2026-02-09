@@ -7,7 +7,12 @@ export default function CardBodyButton(props) {
       {(useLocation().pathname === '/books') && (
         <>
           <label htmlFor="my_modal" className="btn btn-primary w-4/5 lg:w-64" onClick={props.onClickEdit}>Ubah</label>
-          <button className="btn btn-error w-1/6 lg:w-32" disabled="disabled" onClick={props.onClickDelete}>Hapus</button>
+
+          {(props.isRead) ?
+            (<button className="btn btn-error w-1/6 lg:w-32" disabled="disabled" onClick={props.onClickDelete}>Hapus</button>)
+            :
+            (<button className="btn btn-error w-1/6 lg:w-32" onClick={props.onClickDelete}>Hapus</button>)
+          }
         </>
       )}
 

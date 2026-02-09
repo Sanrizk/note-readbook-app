@@ -1,29 +1,24 @@
-import { useState, useEffect } from 'react'
-import './Readings.css'
-import Content from '../../layout/body/Content'
+import { useState, useEffect } from 'react';
+import './Books.css'
 import Navbar from '../../layout/navbar/Navbar'
+import Content from '../../layout/body/Content'
+import { useLocation } from 'react-router';
 
-import { useLocation } from 'react-router'
-
-export default function Readings() {
-  const [isChecked, setIsChecked] = useState(false)
-  const [radio, setRadio] = useState('Romawi Page')
-  const [routes, setRoutes] = useState('')
+export default function Books() {
+  const [routes, setRoutes] = useState('');
   const [books, setBooks] = useState([]);
-  const [tokenBooks, setTokenBooks] = useState('jzism2')
+  const [tokenBooks, setTokenBooks] = useState('asd237hs8')
+  const [loading, setLoading] = useState(true)
   const emptyBook = {
     Title: '',
     Author: '',
     PageRomawi: '',
     Page: '',
-    Slug: '',
-    ReadingNumber: ''
+    Slug: ''
   }
   const [book, setBook] = useState(emptyBook)
   const [message, setMessage] = useState("")
   const [edit, setEdit] = useState(false)
-
-  const location = useLocation()
 
   function secureRandomTextAndNumber(length) {
     if (typeof length !== "number" || length <= 0) {
@@ -53,15 +48,12 @@ export default function Readings() {
       }
       try {
         const resBooks = await fetch(url, { method: 'GET', headers: header }).then(res => res.json())
-        // if (resBooks.data.length !== books.length) {
-        // }
         setBooks(resBooks.data)
+        setLoading(false)
       } catch (err) {
         console.error(err)
       }
     }
-
-    console.log(tokenBooks)
 
     fetching()
   }, [tokenBooks])
@@ -79,8 +71,9 @@ export default function Readings() {
     try {
       const newBook = await fetch(url, { method: 'POST', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
-      setBooks([...books, newBook.data])
-      console.log(newBook)
+      // setBooks([...books, newBook.data])
+      // console.log(newBook)
+      setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)
     }
@@ -102,9 +95,9 @@ export default function Readings() {
     }
 
     try {
-      const response = await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
-      console.log(response)
-      setBooks([...books])
+      await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
+      // console.log(response)
+      setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)
     }
@@ -135,65 +128,41 @@ export default function Readings() {
     }
 
     try {
+      const indexBook = books.findIndex(book => book.Slug === slug)
       const newBook = await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
+      // console.log(newBook)
+      // let oldBooks = books
+      // oldBooks.splice(indexBook, 1)
+      // oldBooks[indexBook] = book
+      // setBooks(oldBooks)
       setTokenBooks(secureRandomTextAndNumber(12))
     } catch (err) {
       console.error(err)
     }
+
   }
-
-  const onChangeChecked = async (e, slug, index) => {
-    // setIsChecked(e.target)
-    // console.log(e.target.parentElement.parentElement)
-    const bookCheck = books.find(book => book.Slug === slug)
-    // console.log(bookCheck)
-    bookCheck.Status.IsRead = true
-    // setIsChecked(index === indexCheck)
-
-    const url = 'https://read-app-steel.vercel.app/api/books/edit'
-    const header = {
-      'Content-Type': 'application/json',
-      'x-api-key': 'df507b0fc3fa5fefab0430838d8d09d1f4f36915bf531528679231d91628e1d98874aad668f5520b90a8afb60b2cf83b5ae0fe338dd030206323bd2c8d1e9aba'
-    }
-
-    try {
-      // const indexBook = books.findIndex(book => book.Slug === slug)
-      await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(bookCheck) }).then(res => res.json())
-      setTokenBooks(secureRandomTextAndNumber(12))
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const onChangeRadio = (e) => {
-    setRadio(e.target.value)
-  }
-
-
-  // useEffect(() => {
-  //   console.log(isChecked)
-  // }, [isChecked])
-
+  // form input
   return (
     <>
+      {(loading) && (
+        <div className='flex flex-col justify-center h-screen items-center'>
+          <span className="loading loading-spinner loading-xl"></span>
+        </div>
+      )}
       <Content
         books={books}
         edit={edit}
         onChangeBook={onChangeBook}
         book={book}
-        // toggleModal={toggleModal}
-        // onClickDelete={onClickDelete}
+        toggleModal={toggleModal}
+        onClickDelete={onClickDelete}
         onClickEdit={onClickEdit}
-        // onSubmitAdd={onSubmitAdd}
+        onSubmitAdd={onSubmitAdd}
         onSubmitEdit={onSubmitEdit}
         onClickCloseModal={onClickCloseModal}
         onClickCloseEdit={onClickCloseEdit}
         message={(message === '') ? '' : message}
-        checked={isChecked}
-        changeChecked={onChangeChecked}
-        changeRadio={onChangeRadio}
-        radio={radio}
       />
       <div className="h-20"></div>
       <Navbar routes={routes}></Navbar>

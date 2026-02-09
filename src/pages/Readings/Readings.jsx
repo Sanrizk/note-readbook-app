@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
-import './Done.css'
+import './Readings.css'
 import Content from '../../layout/body/Content'
 import Navbar from '../../layout/navbar/Navbar'
 
 import { useLocation } from 'react-router'
 
-export default function Done() {
+export default function Readings() {
   const [isChecked, setIsChecked] = useState(false)
   const [radio, setRadio] = useState('Romawi Page')
   const [routes, setRoutes] = useState('')
   const [books, setBooks] = useState([]);
   const [tokenBooks, setTokenBooks] = useState('jzism2')
+  const [loading, setLoading] = useState(true)
   const emptyBook = {
     Title: '',
     Author: '',
@@ -53,15 +54,14 @@ export default function Done() {
       }
       try {
         const resBooks = await fetch(url, { method: 'GET', headers: header }).then(res => res.json())
-        if (resBooks.data.length !== books.length) {
-          setBooks(resBooks.data)
-        }
+        // if (resBooks.data.length !== books.length) {
+        // }
+        setBooks(resBooks.data)
+        setLoading(false)
       } catch (err) {
         console.error(err)
       }
     }
-
-    // console.log(tokenBooks)
 
     fetching()
   }, [tokenBooks])
@@ -161,7 +161,6 @@ export default function Done() {
       // const indexBook = books.findIndex(book => book.Slug === slug)
       await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(bookCheck) }).then(res => res.json())
       setTokenBooks(secureRandomTextAndNumber(12))
-      // setBooks([...books, newBook]) // logika ini perlu diuji di javascript
     } catch (err) {
       console.error(err)
     }
@@ -178,8 +177,13 @@ export default function Done() {
 
   return (
     <>
+      {(loading) && (
+        <div className='flex flex-col justify-center h-screen items-center'>
+          <span className="loading loading-spinner loading-xl"></span>
+        </div>
+      )}
       <Content
-        books={books.filter(book => book.ReadingNumber === Number(book.Page))}
+        books={books}
         edit={edit}
         onChangeBook={onChangeBook}
         book={book}

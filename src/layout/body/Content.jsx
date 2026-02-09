@@ -4,29 +4,8 @@ import Modal from "../../component/Modal/Modal";
 
 export default function Content({ books, edit, onChangeBook, onSubmitAdd, onSubmitEdit, onClickDelete, book, onClickCloseModal, onClickCloseEdit, toggleModal, message, onClickEdit, checked, changeChecked, changeRadio, radio }) {
 
-  // *content home (/)*
-  // welcome & logo
-
-  // *content books*
-  // card
-  // modal add/edit
-  // floating button 
-
-  // *content reads*
-  // card
-  // modal edit
-  // floating button
-
-  // *content done*
-  // card
-  // floating button
-
-  // *content reccomend
-  // page soon
-
   return (
     <>
-
       {books.map((book, index) => (
         <Card
           key={index}
