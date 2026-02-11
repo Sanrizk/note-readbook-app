@@ -127,6 +127,7 @@ export default function Readings() {
   }
 
   const onSubmitEdit = async (e, slug) => {
+    setLoading(true)
     e.preventDefault()
     const url = 'https://read-app-steel.vercel.app/api/books/edit'
     const header = {
@@ -138,6 +139,7 @@ export default function Readings() {
       const newBook = await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
       setTokenBooks(secureRandomTextAndNumber(12))
+      setLoading(false)
     } catch (err) {
       console.error(err)
     }
@@ -199,6 +201,7 @@ export default function Readings() {
         changeChecked={onChangeChecked}
         changeRadio={onChangeRadio}
         radio={radio}
+        loading={loading}
       />
       <div className="h-20"></div>
       <Navbar routes={routes}></Navbar>

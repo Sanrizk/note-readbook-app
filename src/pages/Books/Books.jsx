@@ -61,6 +61,7 @@ export default function Books() {
   const toggleModal = () => document.getElementById('my_modal').showModal()
 
   const onSubmitAdd = async (e) => {
+    setLoading(true)
     e.preventDefault()
     const url = 'https://read-app-steel.vercel.app/api/books/add'
     const header = {
@@ -74,6 +75,7 @@ export default function Books() {
       // setBooks([...books, newBook.data])
       // console.log(newBook)
       setTokenBooks(secureRandomTextAndNumber(12))
+      setLoading(false)
     } catch (err) {
       console.error(err)
     }
@@ -88,18 +90,21 @@ export default function Books() {
   }
 
   const onClickDelete = async (slug) => {
-    const url = 'https://read-app-steel.vercel.app/api/books/del'
-    const header = {
-      'Content-Type': 'application/json',
-      'x-api-key': 'df507b0fc3fa5fefab0430838d8d09d1f4f36915bf531528679231d91628e1d98874aad668f5520b90a8afb60b2cf83b5ae0fe338dd030206323bd2c8d1e9aba'
-    }
-
-    try {
-      await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
-      // console.log(response)
-      setTokenBooks(secureRandomTextAndNumber(12))
-    } catch (err) {
-      console.error(err)
+    const confirm = window.confirm("Yakin Menghapus?")
+    if(confirm) {
+      const url = 'https://read-app-steel.vercel.app/api/books/del'
+      const header = {
+        'Content-Type': 'application/json',
+        'x-api-key': 'df507b0fc3fa5fefab0430838d8d09d1f4f36915bf531528679231d91628e1d98874aad668f5520b90a8afb60b2cf83b5ae0fe338dd030206323bd2c8d1e9aba'
+      }
+  
+      try {
+        await fetch(`${url}/${slug}`, { method: 'DELETE', headers: header }).then(res => res.json())
+        // console.log(response)
+        setTokenBooks(secureRandomTextAndNumber(12))
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
@@ -120,6 +125,7 @@ export default function Books() {
   }
 
   const onSubmitEdit = async (e, slug) => {
+    setLoading(true)
     e.preventDefault()
     const url = 'https://read-app-steel.vercel.app/api/books/edit'
     const header = {
@@ -131,6 +137,7 @@ export default function Books() {
       const indexBook = books.findIndex(book => book.Slug === slug)
       const newBook = await fetch(`${url}/${slug}`, { method: 'PUT', headers: header, body: JSON.stringify(book) }).then(res => res.json())
       setMessage(newBook.message)
+      setLoading(false)
       // console.log(newBook)
       // let oldBooks = books
       // oldBooks.splice(indexBook, 1)
@@ -163,6 +170,7 @@ export default function Books() {
         onClickCloseModal={onClickCloseModal}
         onClickCloseEdit={onClickCloseEdit}
         message={(message === '') ? '' : message}
+        loading={loading}
       />
       <div className="h-20"></div>
       <Navbar routes={routes}></Navbar>

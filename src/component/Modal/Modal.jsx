@@ -17,6 +17,7 @@ export default function Modal(props) {
           changeRadio={props.changeRadio}
           onSubmitEdit={props.onSubmitEdit}
           radio={props.radio}
+          loading={props.loading}
         />
      </div>
     </>

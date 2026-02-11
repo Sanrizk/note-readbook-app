@@ -2,7 +2,7 @@ import Card from "../../component/Card/Card";
 import FloatingActionButton from "../../component/FloatingActionButton/FloatingActionButton";
 import Modal from "../../component/Modal/Modal";
 
-export default function Content({ books, edit, onChangeBook, onSubmitAdd, onSubmitEdit, onClickDelete, book, onClickCloseModal, onClickCloseEdit, toggleModal, message, onClickEdit, checked, changeChecked, changeRadio, radio }) {
+export default function Content({ books, edit, onChangeBook, onSubmitAdd, onSubmitEdit, onClickDelete, book, onClickCloseModal, onClickCloseEdit, toggleModal, message, onClickEdit, checked, changeChecked, changeRadio, radio, loading }) {
 
   return (
     <>
@@ -34,8 +34,9 @@ export default function Content({ books, edit, onChangeBook, onSubmitAdd, onSubm
         closeModal={(edit) ? onClickCloseEdit : onClickCloseModal}
         
         changeRadio={changeRadio}
-        onSubmitEdit={onSubmitEdit}
+        // onSubmitEdit={onSubmitEdit}
         radio={radio}
+        loading={loading}
       />
       <FloatingActionButton modal={toggleModal}></FloatingActionButton>
     </>

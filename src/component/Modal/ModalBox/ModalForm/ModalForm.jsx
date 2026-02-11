@@ -39,11 +39,11 @@ export default function ModalForm(props) {
   if (useLocation().pathname === '/books') {
     return (
       <form className="flex flex-col" method="POST" onSubmit={props.submit}>
-        <div className="my-1">
+        <div className="w-full my-1">
           {(props.isEdit) ? (
             <p className="flex justify-between m-2"><span>Judul:</span> <span>{props.dataBook.Title}</span></p>
           ) : (
-            <input className="input" type="text" onChange={props.change} name="Title" placeholder="Judul Buku" value={props.dataBook.Title} />
+            <input className="input w-full" type="text" onChange={props.change} name="Title" placeholder="Judul Buku" value={props.dataBook.Title} />
           )}
         </div>
         {
